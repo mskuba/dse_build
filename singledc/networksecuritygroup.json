@@ -441,6 +441,30 @@
           }
         ]
       }
+    },
+   {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "appnet-nsg",
+      "location": "[resourcegroup().location]",
+      "apiVersion": "2017-03-01",
+      "scale": null,
+      "properties": {
+        "securityRules": [
+          { 
+            "name": "SSH",
+            "properties": {
+              "protocol": "TCP", 
+              "sourcePortRange": "*", 
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
     }
   ],
   "outputs": {}

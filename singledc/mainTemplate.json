@@ -104,11 +104,13 @@
     "nsgTemplateUrl": "[concat(variables('templateUrl'), 'networksecuritygroup.json')]",
     "nodesTemplateUrl": "[concat(variables('templateUrl'), 'nodes.json')]",
     "opsCenterTemplateUrl": "[concat(variables('templateUrl'), 'opsCenter.json')]",
+    "appservTemplateUrl": "[concat(variables('templateUrl'), 'appserv.json')]",
     "location": "[resourcegroup().location]",
     "uniqueString": "[uniqueString(resourceGroup().id, deployment().name)]",
     "vnetName": "vnet",
     "subnet1Name": "datanet",
     "subnet2Name": "mgmtnet",
+    "subnet3Name": "appnet",
     "osSettings": {
       "imageReference": {
         "publisher": "datastax",
@@ -118,7 +120,8 @@
       },
       "scripts": [
         "[concat(variables('extensionUrl'), 'node.sh')]",
-        "[concat(variables('extensionUrl'), 'opsCenter.sh')]"
+        "[concat(variables('extensionUrl'), 'opsCenter.sh')]",
+	"[concat(variables('extensionUrl'), 'appserv.sh')]"
       ]
     }
   },
@@ -168,7 +171,16 @@
                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'mgmtnet-nsg')]"
                 }
             }
-	  }
+	  },
+          {
+            "name": "[variables('subnet3Name')]",
+            "properties": {
+              "addressPrefix": "10.2.0.48/28",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', 'appnet-nsg')]"
+                }
+            }
+          }
         ]
       }
     },
@@ -259,6 +271,44 @@
           },
           "subnetName": {
             "value": "[variables('subnet2Name')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "appserv",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2016-02-01",
+      "dependsOn": [
+        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('appservTemplateUrl')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "location": {
+            "value": "[variables('location')]"
+          },
+          "uniqueString": {
+            "value": "[variables('uniqueString')]"
+          },
+          "adminUsername": {
+            "value": "[parameters('adminUsername')]"
+          },
+          "adminPassword": {
+            "value": "[parameters('adminPassword')]"
+          },
+          "osSettings": {
+            "value": "[variables('osSettings')]"
+          },
+          "vnetName": {
+            "value": "[variables('vnetName')]"
+          },
+          "subnetName": {
+            "value": "[variables('subnet3Name')]"
           }
         }
       }
