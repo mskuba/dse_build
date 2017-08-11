@@ -64,33 +64,21 @@ do
   n=$[$n+1]
   sleep 15s
 done
-apt install sshpass
 pip install requests
 
-opsprivip=`sshpass -p $adminpasswd ssh $opscenter_dns_name -t 'hostname -I'`
 release="5.5.4"
 wget https://github.com/mskuba/install-datastax-ubuntu/archive/$release.zip
 unzip $release.zip
 cd install-datastax-ubuntu-$release/bin/lcm
 
 ./addNode.py \
---opsc-ip $opsprivip \
+--opsc-ip $opscenter_dns_name \
 --clustername $cluster_name \
 --dcsize $data_center_size \
 --dcname $data_center_name \
 --rack $rack \
+--pubip $public_ip \
 --privip $private_ip \
 --nodeid $node_id \
 --dbpasswd $dbpasswd
-
-#./addNode.py \
-#--opsc-ip $opscenter_dns_name \
-#--clustername $cluster_name \
-#--dcsize $data_center_size \
-#--dcname $data_center_name \
-#--rack $rack \
-#--pubip $public_ip \
-#--privip $private_ip \
-#--nodeid $node_id \
-#--dbpasswd $dbpasswd
 
