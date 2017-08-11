@@ -5,6 +5,7 @@ unique_string=$2
 data_center_name=$3
 opscenter_location=$4
 dbpasswd=$5
+adminpasswd=$6
 
 echo "Input to node.sh is:"
 echo unique_string $unique_string
@@ -35,7 +36,7 @@ useradd cassandra
 chown -R cassandra:cassandra /data/cassandra
 
 opscenter_dns_name="opscenter$unique_string.$opscenter_location.cloudapp.azure.com"
-cluster_name="mycluster"
+cluster_name="sbuxcluster"
 public_ip=`curl --retry 10 icanhazip.com`
 private_ip=`echo $(hostname -I)`
 node_id=$private_ip
@@ -63,21 +64,33 @@ do
   n=$[$n+1]
   sleep 15s
 done
-
+apt install sshpass
 pip install requests
 
+opsprivip=`sshpass -p $adminpasswd ssh $opscenter_dns_name -t 'hostname -I'`
 release="5.5.4"
 wget https://github.com/mskuba/install-datastax-ubuntu/archive/$release.zip
 unzip $release.zip
 cd install-datastax-ubuntu-$release/bin/lcm
 
 ./addNode.py \
---opsc-ip $opscenter_dns_name \
+--opsc-ip $opsprivip \
 --clustername $cluster_name \
 --dcsize $data_center_size \
 --dcname $data_center_name \
 --rack $rack \
---pubip $public_ip \
 --privip $private_ip \
 --nodeid $node_id \
 --dbpasswd $dbpasswd
+
+#./addNode.py \
+#--opsc-ip $opscenter_dns_name \
+#--clustername $cluster_name \
+#--dcsize $data_center_size \
+#--dcname $data_center_name \
+#--rack $rack \
+#--pubip $public_ip \
+#--privip $private_ip \
+#--nodeid $node_id \
+#--dbpasswd $dbpasswd
+
