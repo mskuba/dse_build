@@ -336,7 +336,7 @@
                           "privateIPAddress": "10.2.0.7",
                           "privateIPAllocationMethod": "Static",
                           "subnet": {
-                              "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('subnet1Name'))]"
+                              "name": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('subnet1Name'))]"
                           }
                       }
                   }
