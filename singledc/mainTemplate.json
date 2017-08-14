@@ -95,7 +95,13 @@
       "metadata": {
         "description": "Password for default OpsCenter user 'admin'"
       }
-    }
+    },
+    "lbname": {
+      "type": "string",
+      "defaultValue": "dse_lb",
+      "metadata": {
+        "description": "Load Balancer name"
+      }
   },
   "variables": {
     "baseUrl": "https://raw.githubusercontent.com/mskuba/dse_build/master",
@@ -271,7 +277,7 @@
           },
           "subnetName": {
             "value": "[variables('subnet2Name')]"
-          }
+	  }
         }
       }
     },
@@ -315,7 +321,7 @@
     },
     {
           "apiVersion": "2016-03-30",
-          "name": "[parameters('name')]",
+          "name": "[parameters('lbname')]",
           "type": "Microsoft.Network/loadBalancers",
           "location": "[parameters('location')]",
           "dependsOn": [],
