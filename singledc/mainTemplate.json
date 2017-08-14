@@ -102,6 +102,7 @@
       "metadata": {
         "description": "Load Balancer name"
       }
+    }
   },
   "variables": {
     "baseUrl": "https://raw.githubusercontent.com/mskuba/dse_build/master",
