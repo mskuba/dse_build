@@ -312,7 +312,82 @@
           }
         }
       }
-    }
+    },
+    {
+          "apiVersion": "2016-03-30",
+          "name": "[parameters('name')]",
+          "type": "Microsoft.Network/loadBalancers",
+          "location": "[parameters('location')]",
+          "dependsOn": [],
+          "properties": {
+              "frontendIPConfigurations": [
+                  {
+                      "name": "LoadBalancerFrontEnd",
+                      "etag": "W/\"8cd6f5c2-9d41-4e4e-815e-aeeadb8a83ea\"",
+                      "properties": {
+                          "provisioningState": "Succeeded",
+                          "privateIPAddress": "10.2.0.7",
+                          "privateIPAllocationMethod": "Static",
+                          "subnet": {
+                              "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('subnets_datanet_name'))]"
+                          }
+                      }
+                  }
+              ],
+              "backendAddressPools": [
+                  {
+                      "name": "dse_bepool",
+                      "etag": "W/\"8cd6f5c2-9d41-4e4e-815e-aeeadb8a83ea\"",
+                      "properties": {
+                          "provisioningState": "Succeeded"
+                      }
+                  }
+              ],
+              "loadBalancingRules": [
+                  {
+                      "name": "[concat(parameters('loadBalancers_dse_lb_name'),'_rule')]",
+                      "etag": "W/\"8cd6f5c2-9d41-4e4e-815e-aeeadb8a83ea\"",
+                      "properties": {
+                          "provisioningState": "Succeeded",
+                          "frontendIPConfiguration": {
+                              "id": "[parameters('loadBalancers_dse_lb_id')]"
+                          },
+                          "frontendPort": 9042,
+                          "backendPort": 9042,
+                          "enableFloatingIP": false,
+                          "idleTimeoutInMinutes": 4,
+                          "protocol": "Tcp",
+                          "loadDistribution": "Default",
+                          "backendAddressPool": {
+                              "id": "[parameters('loadBalancers_dse_lb_id_1')]"
+                          },
+                          "probe": {
+                              "id": "[parameters('loadBalancers_dse_lb_id_2')]"
+                          }
+                      }
+                  }
+              ],
+              "probes": [
+                  {
+                      "name": "dse_probe",
+                      "etag": "W/\"8cd6f5c2-9d41-4e4e-815e-aeeadb8a83ea\"",
+                      "properties": {
+                          "provisioningState": "Succeeded",
+                          "protocol": "Tcp",
+                          "port": 9042,
+                          "intervalInSeconds": 5,
+                          "numberOfProbes": 2
+                      }
+                  }
+              ],
+              "inboundNatRules": [],
+              "outboundNatRules": [],
+              "inboundNatPools": []
+          },
+          "dependsOn": [
+              "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('subnet1Name'))]"
+      ]
+   }
   ],
   "outputs": {
     "lifecycleManagerURL": {
