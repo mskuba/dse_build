@@ -1,6 +1,5 @@
 #!/bin/bash
 
-RESOURCE_GROUP=dse02_rg
 avs=`az vm availability-set list -g $RESOURCE_GROUP -o table | grep $RESOURCE_GROUP | awk -F' ' '{print $2}'`
 nicname=`az network nic list -g $RESOURCE_GROUP -o table | grep $avs | awk -F' ' '{print $3}' | xargs`
 lbname=`az network lb list -o table | grep $RESOURCE_GROUP | awk -F' ' '{print $2}'`
