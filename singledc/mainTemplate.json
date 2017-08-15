@@ -95,13 +95,6 @@
       "metadata": {
         "description": "Password for default OpsCenter user 'admin'"
       }
-    },
-    "lbname": {
-      "type": "string",
-      "defaultValue": "dse_lb",
-      "metadata": {
-        "description": "Load Balancer name"
-      }
     }
   },
   "variables": {
@@ -112,7 +105,6 @@
     "nodesTemplateUrl": "[concat(variables('templateUrl'), 'nodes.json')]",
     "opsCenterTemplateUrl": "[concat(variables('templateUrl'), 'opsCenter.json')]",
     "appservTemplateUrl": "[concat(variables('templateUrl'), 'appserv.json')]",
-    "lbTemplateUrl": "[concat(variables('templateUrl'), 'loadbalancer.json')]",
     "location": "[resourcegroup().location]",
     "uniqueString": "[uniqueString(resourceGroup().id, deployment().name)]",
     "vnetName": "vnet",
@@ -192,35 +184,6 @@
         ]
       }
     },
-    { 
-      "name": "[parameters('lbname')]",
-      "type": "Microsoft.Network/loadBalancers",
-      "apiVersion": "2016-02-01",
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('lbTemplateUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[resourcegroup().location]"
-          },
-          "vnetName": {
-            "value": "[variables('vnetName')]"
-          },
-	  "subnetName": {
-            "value": "[variables('subnet1Name')]"
-          },
-          "loadBalancerName": {
-            "value": "[parameters('lbname')]"
-          }
-        }
-      }
-    },      
     {
       "name": "nodes",
       "type": "Microsoft.Resources/deployments",
@@ -267,9 +230,6 @@
           },
           "namespace": {
             "value": "dc0"
-          },
-          "loadBalancerName": {
-            "value": "[parameters('lbname')]"
           }
         }
       }
