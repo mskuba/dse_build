@@ -46,7 +46,7 @@
     "vmName": "[concat(parameters('namespace'), 'vm')]",
     "vnetId": "[resourceId('Microsoft.Network/virtualNetworks', parameters('vnetName'))]",
     "subnetId": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-    "lbID": "[resourceId('Microsoft.Network/loadBalancers',parameters('loadBalancerName'))]"
+    "lbID": "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerName'))]"
   },
   "resources": [
     {
@@ -87,6 +87,7 @@
       },
       "dependsOn": [
         "[concat('Microsoft.Network/publicIPAddresses/', parameters('namespace'), 'vm', copyindex())]"
+	"[concat('Microsoft.Network/loadBalancers', parameters('loadBalancerName'))]"
       ],
       "properties": {
         "ipConfigurations": [
