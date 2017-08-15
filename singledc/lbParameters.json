@@ -1,7 +1,4 @@
 {
-  "location": {
-    "value": "eastus"
-  },
   "vnetName": {
     "value": "vnet"
   },
