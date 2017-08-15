@@ -93,7 +93,6 @@
               "subnet": {
                 "id": "[variables('subnetId')]"
               }
-              ]
             }
           }
         ]
