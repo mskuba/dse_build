@@ -24,7 +24,10 @@
       "apiVersion": "2015-05-01-preview",
       "type": "Microsoft.Network/loadBalancers",
       "name": "[parameters('loadBalancerName')]",
-      "location": "West US",
+      "location": "westus",
+      "dependsOn": [
+        "[variables('vnetId')]"
+      ],
       "properties": {
         "frontendIPConfigurations": [
           {
