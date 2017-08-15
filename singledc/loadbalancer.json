@@ -26,7 +26,7 @@
       "name": "[parameters('loadBalancerName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[variables('vnetId')]"
+        "[variables('subnetId')]"
       ],
       "properties": {
         "frontendIPConfigurations": [
