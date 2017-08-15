@@ -207,7 +207,7 @@
         },
         "parameters": {
           "location": {
-            "value": "[variables('location')]"
+            "value": "[resourcegroup().location]"
           },
           "vnetName": {
             "value": "[variables('vnetName')]"

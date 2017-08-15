@@ -86,7 +86,7 @@
         "count": "[parameters('nodeCount')]"
       },
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', parameters('namespace'), 'vm', copyindex())]"
+        "[concat('Microsoft.Network/publicIPAddresses/', parameters('namespace'), 'vm', copyindex())]",
 	"[concat('Microsoft.Network/loadBalancers', parameters('loadBalancerName'))]"
       ],
       "properties": {
