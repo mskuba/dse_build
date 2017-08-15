@@ -193,6 +193,7 @@
       }
     },
     { 
+      "name": "[parameters('lbname')]",
       "type": "Microsoft.Network/loadBalancers",
       "apiVersion": "2016-02-01",
       "dependsOn": [
