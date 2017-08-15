@@ -2,7 +2,7 @@
 
 RESOURCE_GROUP=$1
 
-
+echo "Start Time: $(date)"
 if [ -z "$(which az)" ]
 then
     echo "CLI v2 'az' command not found, falling back to v1 'azure'"
@@ -23,6 +23,8 @@ else
      --parameters @lbParameters.json \
      --verbose
 fi
-export RESOURCE_GROUP
+export $RESOURCE_GROUP
 ./bepool_config.sh
 
+echo " "
+echo "Finish Time: $(date)"
