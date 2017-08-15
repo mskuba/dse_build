@@ -105,14 +105,12 @@
     "nodesTemplateUrl": "[concat(variables('templateUrl'), 'nodes.json')]",
     "opsCenterTemplateUrl": "[concat(variables('templateUrl'), 'opsCenter.json')]",
     "appservTemplateUrl": "[concat(variables('templateUrl'), 'appserv.json')]",
-    "lbTemplateUrl": "[concat(variables('templateUrl'), 'loadbalancer.json')]",
     "location": "[resourcegroup().location]",
     "uniqueString": "[uniqueString(resourceGroup().id, deployment().name)]",
     "vnetName": "vnet",
     "subnet1Name": "datanet",
     "subnet2Name": "mgmtnet",
     "subnet3Name": "appnet",
-    "lbname": "dse_lb",
     "osSettings": {
       "imageReference": {
         "publisher": "datastax",
@@ -186,35 +184,6 @@
         ]
       }
     },
-    { 
-      "name": "dse_lb",
-      "type": "Microsoft.Network/loadBalancers",
-      "apiVersion": "2015-06-15",
-      "dependsOn": [
-        "[concat('Microsoft.Network/virtualNetworks/', variables('vnetName'))]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('lbTemplateUrl')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[variables('location')]"
-          },
-          "vnetName": {
-            "value": "[variables('vnetName')]"
-          },
-         "subnetName": {
-            "value": "[variables('subnet1Name')]"
-          },
-          "loadBalancerName": {
-            "value": "[variables('lbname')]"
-          }
-        }
-      }
-    },      
     {
       "name": "nodes",
       "type": "Microsoft.Resources/deployments",
