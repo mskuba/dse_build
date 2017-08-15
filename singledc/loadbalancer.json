@@ -21,13 +21,10 @@
   },
  "resources": [
    {
-      "apiVersion": "2016-04-30-preview",
+      "apiVersion": "2017-08-01",
       "type": "Microsoft.Network/loadBalancers",
       "name": "[parameters('loadBalancerName')]",
       "location": "[parameters('location')]",
-      "dependsOn": [
-        "[variables('vnetId')]"
-      ],
       "properties": {
         "frontendIPConfigurations": [
           {

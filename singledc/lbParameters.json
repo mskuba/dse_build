@@ -1,20 +1,14 @@
 {
-  "nodeCount": {
-    "value": 3
+  "location": {
+    "value": "westus"
   },
-  "vmSize": {
-    "value": "Standard_DS2_v2"
+  "vnetName": {
+    "value": "vnet"
   },
-  "adminUsername": {
-    "value": "datastax"
+  "subnetName": {
+    "value": "datanet"
   },
-  "adminPassword": {
-    "value": "foo123!"
-  },
-  "DBPassword": {
-    "value": "asdf456$"
-  },
-  "OpsCPassword": {
-    "value": "bar987&"
+  "loadBalancerName": {
+    "value": "dse_lb"
   }
 }
