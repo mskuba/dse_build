@@ -17,4 +17,9 @@ else
      --template-file mainTemplate.json \
      --parameters @mainTemplateParameters.json \
      --verbose
+    az group deployment create \
+     --resource-group $RESOURCE_GROUP \
+     --template-file loadbalancer.json \
+     --parameters @lbParameters.json \
+     --verbose
 fi
